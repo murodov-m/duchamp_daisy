@@ -76,6 +76,79 @@
             background: #000;
         }
 
+        /* Video Placeholder */
+        .video-placeholder {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f0f23 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 1;
+            transition: opacity 0.5s ease;
+        }
+
+        .video-placeholder.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .video-placeholder-icon {
+            width: 80px;
+            height: 80px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .video-placeholder-icon::before {
+            content: '';
+            position: absolute;
+            inset: -3px;
+            border: 3px solid transparent;
+            border-top-color: rgba(255, 255, 255, 0.8);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .video-placeholder-text {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 14px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        /* Decorative elements for placeholder */
+        .placeholder-decoration {
+            position: absolute;
+            border-radius: 50%;
+            background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.02) 100%);
+            filter: blur(40px);
+        }
+
+        .placeholder-decoration-1 {
+            width: 200px;
+            height: 200px;
+            top: 20%;
+            left: -50px;
+        }
+
+        .placeholder-decoration-2 {
+            width: 150px;
+            height: 150px;
+            bottom: 30%;
+            right: -30px;
+        }
+
         .video-wrapper {
             position: absolute;
             top: 0;
@@ -85,6 +158,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            z-index: 2;
         }
 
         .video-wrapper video {
@@ -94,7 +168,6 @@
             object-position: center;
         }
 
-        /* For vertical/portrait videos - ensures proper display */
         @media (max-aspect-ratio: 9/16) {
             .video-wrapper video {
                 width: 100%;
@@ -114,11 +187,13 @@
                 rgba(0, 0, 0, 0.5) 100%
             );
             pointer-events: none;
+            z-index: 3;
         }
 
         /* Sound Toggle Button */
         .sound-toggle {
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 30;
         }
         
         .sound-toggle:active {
@@ -146,7 +221,7 @@
         }
 
         /* ═══════════════════════════════════════════════════════════
-           BLURRED PROJECTS TEASER
+           BLURRED PROJECTS TEASER WITH LOOPING CAROUSEL
            ═══════════════════════════════════════════════════════════ */
         .projects-teaser {
             position: relative;
@@ -155,37 +230,43 @@
 
         .projects-carousel-wrapper {
             position: relative;
+            overflow: hidden;
         }
 
         /* The blur overlay on top of carousel */
         .blur-overlay {
             position: absolute;
             inset: 0;
-            background: rgba(245, 245, 247, 0.3);
+            background: rgba(245, 245, 247, 0.4);
             backdrop-filter: blur(8px);
             -webkit-backdrop-filter: blur(8px);
             z-index: 10;
             pointer-events: none;
         }
 
-        .carousel {
+        /* Infinite Scrolling Carousel */
+        .carousel-track {
             display: flex;
             gap: 16px;
-            overflow-x: auto;
-            scroll-snap-type: x mandatory;
-            -webkit-overflow-scrolling: touch;
-            scrollbar-width: none;
-            -ms-overflow-style: none;
-            padding: 0 24px;
-            pointer-events: none; /* Disable scroll since it's just a teaser */
+            width: max-content;
+            animation: scroll-loop 20s linear infinite;
         }
-        
-        .carousel::-webkit-scrollbar {
-            display: none;
+
+        @keyframes scroll-loop {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+
+        /* Pause animation on hover (optional for desktop) */
+        .projects-carousel-wrapper:hover .carousel-track {
+            animation-play-state: paused;
         }
 
         .carousel-item {
-            scroll-snap-align: center;
             flex-shrink: 0;
         }
 
@@ -282,15 +363,25 @@
             padding-bottom: env(safe-area-inset-bottom, 20px);
         }
 
-        /* Shimmer effect for teaser */
-        @keyframes shimmer {
-            0% { opacity: 0.5; }
-            50% { opacity: 0.8; }
-            100% { opacity: 0.5; }
+        /* Edge fade for carousel */
+        .carousel-fade-left,
+        .carousel-fade-right {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 60px;
+            z-index: 5;
+            pointer-events: none;
         }
 
-        .shimmer {
-            animation: shimmer 3s ease-in-out infinite;
+        .carousel-fade-left {
+            left: 0;
+            background: linear-gradient(to right, #f5f5f7 0%, transparent 100%);
+        }
+
+        .carousel-fade-right {
+            right: 0;
+            background: linear-gradient(to left, #f5f5f7 0%, transparent 100%);
         }
     </style>
 </head>
@@ -298,9 +389,20 @@
 <body class="bg-[#f5f5f7] text-gray-900 antialiased">
 
     <!-- ═══════════════════════════════════════════════════════════════════
-         SECTION 1: VERTICAL VIDEO HERO
+         SECTION 1: VERTICAL VIDEO HERO (No photo, just video + text)
          ═══════════════════════════════════════════════════════════════════ -->
     <section class="video-container">
+        
+        <!-- Video Placeholder (shows while video loads) -->
+        <div class="video-placeholder" id="videoPlaceholder">
+            <div class="placeholder-decoration placeholder-decoration-1"></div>
+            <div class="placeholder-decoration placeholder-decoration-2"></div>
+            <div class="video-placeholder-icon">
+                <i class="fas fa-play text-white/80 text-2xl ml-1"></i>
+            </div>
+            <p class="video-placeholder-text">Loading video...</p>
+        </div>
+
         <!-- Vertical Video -->
         <div class="video-wrapper">
             <video 
@@ -309,7 +411,6 @@
                 loop 
                 muted 
                 playsinline
-                poster="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1080&q=80"
             >
                 <!-- 
                     ═══════════════════════════════════════════════════════
@@ -327,13 +428,13 @@
         <!-- Sound Toggle Button (Top Right) -->
         <button 
             id="soundToggle"
-            class="sound-toggle glass-dark absolute top-6 right-6 safe-area-top w-12 h-12 rounded-full flex items-center justify-center z-30"
+            class="sound-toggle glass-dark absolute top-6 right-6 safe-area-top w-12 h-12 rounded-full flex items-center justify-center"
             aria-label="Toggle sound"
         >
             <i id="soundIcon" class="fas fa-volume-xmark text-white text-lg"></i>
         </button>
 
-        <!-- Hero Content Card (Bottom) -->
+        <!-- Hero Content Card (Bottom) - NO PHOTO, just text -->
         <div class="absolute bottom-0 left-0 right-0 p-6 pb-8 z-20">
             <div class="glass rounded-[32px] p-6 max-w-lg mx-auto animate-fade-in-up">
                 <!-- Tags -->
@@ -452,7 +553,7 @@
     </section>
 
     <!-- ═══════════════════════════════════════════════════════════════════
-         SECTION 3: BLURRED PROJECTS TEASER
+         SECTION 3: BLURRED PROJECTS TEASER WITH LOOPING CAROUSEL
          ═══════════════════════════════════════════════════════════════════ -->
     <section class="projects-teaser bg-[#f5f5f7] py-16 safe-area-bottom">
         
@@ -463,7 +564,11 @@
         </div>
 
         <!-- Carousel with Blur Overlay -->
-        <div class="projects-carousel-wrapper relative">
+        <div class="projects-carousel-wrapper relative py-4">
+            
+            <!-- Edge Fades -->
+            <div class="carousel-fade-left"></div>
+            <div class="carousel-fade-right"></div>
             
             <!-- Blur Overlay -->
             <div class="blur-overlay"></div>
@@ -479,8 +584,10 @@
                 </a>
             </div>
 
-            <!-- Blurred Carousel (Teaser - not interactive) -->
-            <div class="carousel py-4 shimmer">
+            <!-- Infinite Looping Carousel -->
+            <div class="carousel-track">
+                
+                <!-- === FIRST SET OF CARDS === -->
                 
                 <!-- Project Card 1 -->
                 <div class="carousel-item">
@@ -542,8 +649,98 @@
                     </div>
                 </div>
 
-                <!-- Spacer -->
-                <div class="carousel-item w-6 flex-shrink-0"></div>
+                <!-- Project Card 5 -->
+                <div class="carousel-item">
+                    <div class="project-card w-64 h-80 shadow-lg">
+                        <img 
+                            src="https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=600&q=80" 
+                            alt="Project"
+                            loading="lazy"
+                        >
+                        <div class="project-card-content">
+                            <span class="text-white/70 text-xs font-medium uppercase tracking-wider">Hollywood Hills</span>
+                            <h4 class="text-white text-lg font-semibold mt-1">Vista Heights</h4>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- === DUPLICATE SET FOR SEAMLESS LOOP === -->
+                
+                <!-- Project Card 1 (duplicate) -->
+                <div class="carousel-item">
+                    <div class="project-card w-64 h-80 shadow-lg">
+                        <img 
+                            src="https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=600&q=80" 
+                            alt="Project"
+                            loading="lazy"
+                        >
+                        <div class="project-card-content">
+                            <span class="text-white/70 text-xs font-medium uppercase tracking-wider">Beverly Hills</span>
+                            <h4 class="text-white text-lg font-semibold mt-1">The Skyline Residence</h4>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project Card 2 (duplicate) -->
+                <div class="carousel-item">
+                    <div class="project-card w-64 h-80 shadow-lg">
+                        <img 
+                            src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=600&q=80" 
+                            alt="Project"
+                            loading="lazy"
+                        >
+                        <div class="project-card-content">
+                            <span class="text-white/70 text-xs font-medium uppercase tracking-wider">Malibu Coast</span>
+                            <h4 class="text-white text-lg font-semibold mt-1">Ocean View Estates</h4>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project Card 3 (duplicate) -->
+                <div class="carousel-item">
+                    <div class="project-card w-64 h-80 shadow-lg">
+                        <img 
+                            src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=600&q=80" 
+                            alt="Project"
+                            loading="lazy"
+                        >
+                        <div class="project-card-content">
+                            <span class="text-white/70 text-xs font-medium uppercase tracking-wider">Santa Monica</span>
+                            <h4 class="text-white text-lg font-semibold mt-1">Sunset Plaza</h4>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project Card 4 (duplicate) -->
+                <div class="carousel-item">
+                    <div class="project-card w-64 h-80 shadow-lg">
+                        <img 
+                            src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=600&q=80" 
+                            alt="Project"
+                            loading="lazy"
+                        >
+                        <div class="project-card-content">
+                            <span class="text-white/70 text-xs font-medium uppercase tracking-wider">Bel Air</span>
+                            <h4 class="text-white text-lg font-semibold mt-1">The Grand Manor</h4>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project Card 5 (duplicate) -->
+                <div class="carousel-item">
+                    <div class="project-card w-64 h-80 shadow-lg">
+                        <img 
+                            src="https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=600&q=80" 
+                            alt="Project"
+                            loading="lazy"
+                        >
+                        <div class="project-card-content">
+                            <span class="text-white/70 text-xs font-medium uppercase tracking-wider">Hollywood Hills</span>
+                            <h4 class="text-white text-lg font-semibold mt-1">Vista Heights</h4>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
 
@@ -601,9 +798,30 @@
         };
 
         // ═══════════════════════════════════════════════════════════════
-        // SOUND TOGGLE FUNCTIONALITY
+        // VIDEO PLACEHOLDER & LOADING
         // ═══════════════════════════════════════════════════════════════
         const video = document.getElementById('heroVideo');
+        const placeholder = document.getElementById('videoPlaceholder');
+
+        // Hide placeholder when video can play
+        video.addEventListener('canplay', function() {
+            placeholder.classList.add('hidden');
+        });
+
+        // Also hide on playing event (backup)
+        video.addEventListener('playing', function() {
+            placeholder.classList.add('hidden');
+        });
+
+        // Show placeholder again if video errors
+        video.addEventListener('error', function() {
+            placeholder.querySelector('.video-placeholder-text').textContent = 'Video unavailable';
+            placeholder.querySelector('.video-placeholder-icon').innerHTML = '<i class="fas fa-exclamation-triangle text-white/60 text-2xl"></i>';
+        });
+
+        // ═══════════════════════════════════════════════════════════════
+        // SOUND TOGGLE FUNCTIONALITY
+        // ═══════════════════════════════════════════════════════════════
         const soundToggle = document.getElementById('soundToggle');
         const soundIcon = document.getElementById('soundIcon');
         let isMuted = true;
@@ -626,12 +844,10 @@
 
         // Attempt to play video (handles autoplay policies)
         document.addEventListener('DOMContentLoaded', function() {
-            // Ensure video plays
             video.play().catch(function(error) {
                 console.log('Video autoplay was prevented:', error);
             });
 
-            // Try to autoplay with a slight delay if needed
             setTimeout(() => {
                 if (video.paused) {
                     video.play().catch(() => {});
@@ -639,7 +855,7 @@
             }, 100);
         });
 
-        // Also try to play on any user interaction (for strict browsers)
+        // Touch to play fallback for strict browsers
         document.addEventListener('touchstart', function initVideo() {
             if (video.paused) {
                 video.play().catch(() => {});
@@ -653,7 +869,6 @@
         function generateVCard() {
             const d = BROKER_DATA;
             
-            // Build vCard string (version 3.0 for maximum compatibility)
             const vcard = [
                 'BEGIN:VCARD',
                 'VERSION:3.0',
@@ -669,7 +884,6 @@
                 'END:VCARD'
             ].join('\n');
             
-            // Create blob and download
             const blob = new Blob([vcard], { type: 'text/vcard;charset=utf-8' });
             const url = URL.createObjectURL(blob);
             
@@ -677,12 +891,10 @@
             link.href = url;
             link.download = `${d.fullName.replace(/\s+/g, '_')}.vcf`;
             
-            // Append to body, click, and remove
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
             
-            // Cleanup
             URL.revokeObjectURL(url);
             
             // Visual feedback
@@ -697,7 +909,6 @@
             }, 2000);
         }
 
-        // Attach event listener
         document.getElementById('saveContactBtn').addEventListener('click', generateVCard);
 
         // ═══════════════════════════════════════════════════════════════
