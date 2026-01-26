@@ -213,24 +213,14 @@
 
         /* Elegant decorative line */
         .elegant-line {
-            width: 40px;
+            width: 30px;
             height: 1px;
-            background: linear-gradient(90deg, transparent 0%, rgba(180, 160, 130, 0.8) 50%, transparent 100%);
-        }
-
-        .elegant-line-long {
-            width: 60px;
-            height: 1px;
-            background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.4) 50%, transparent 100%);
+            background: linear-gradient(90deg, transparent 0%, rgba(180, 160, 130, 0.6) 50%, transparent 100%);
         }
 
         /* Gold accent */
         .text-gold {
             color: #c9a962;
-        }
-
-        .border-gold {
-            border-color: rgba(201, 169, 98, 0.3);
         }
 
         /* Shimmer animation for elegance */
@@ -398,16 +388,16 @@
 
         /* Diamond decorative element */
         .diamond {
-            width: 6px;
-            height: 6px;
+            width: 5px;
+            height: 5px;
             background: linear-gradient(135deg, #c9a962 0%, #e5cf98 100%);
             transform: rotate(45deg);
         }
 
         .diamond-small {
-            width: 4px;
-            height: 4px;
-            background: rgba(201, 169, 98, 0.6);
+            width: 3px;
+            height: 3px;
+            background: rgba(201, 169, 98, 0.5);
             transform: rotate(45deg);
         }
     </style>
@@ -456,57 +446,50 @@
             <i id="soundIcon" class="fas fa-volume-xmark text-white text-lg"></i>
         </button>
 
-        <!-- Hero Content Card (Bottom) - ELEGANT REDESIGN -->
-        <div class="absolute bottom-0 left-0 right-0 p-6 pb-8 z-20">
-            <div class="glass rounded-[32px] p-8 max-w-lg mx-auto animate-fade-in-up overflow-hidden relative">
+        <!-- Hero Content Card (Bottom) - COMPACT ELEGANT DESIGN -->
+        <div class="absolute bottom-0 left-0 right-0 p-5 pb-6 z-20">
+            <div class="glass rounded-[28px] px-6 py-5 max-w-sm mx-auto animate-fade-in-up overflow-hidden relative">
                 
                 <!-- Subtle corner accents -->
-                <div class="absolute top-4 left-4 diamond-small opacity-60"></div>
-                <div class="absolute top-4 right-4 diamond-small opacity-60"></div>
+                <div class="absolute top-3 left-3 diamond-small opacity-50"></div>
+                <div class="absolute top-3 right-3 diamond-small opacity-50"></div>
                 
                 <!-- Event Name with Elegant Styling -->
-                <div class="text-center mb-5">
+                <div class="text-center">
                     <!-- Top decorative line -->
-                    <div class="flex items-center justify-center gap-3 mb-4">
+                    <div class="flex items-center justify-center gap-2 mb-2">
                         <div class="elegant-line"></div>
                         <div class="diamond"></div>
                         <div class="elegant-line"></div>
                     </div>
                     
-                    <!-- Event Title -->
-                    <p class="text-xs font-medium tracking-[0.25em] uppercase text-gray-500 mb-2">
+                    <!-- Event Label -->
+                    <p class="text-[10px] font-medium tracking-[0.2em] uppercase text-gray-400 mb-1">
                         Exclusive Event
                     </p>
-                    <h1 class="font-display text-3xl font-medium shimmer-text tracking-wide">
+                    
+                    <!-- Event Title -->
+                    <h1 class="font-display text-xl font-medium shimmer-text tracking-wide">
                         ABSA Du Champ
                     </h1>
                     
-                    <!-- Bottom decorative line -->
-                    <div class="flex items-center justify-center gap-3 mt-4">
-                        <div class="elegant-line"></div>
-                        <div class="diamond"></div>
-                        <div class="elegant-line"></div>
-                    </div>
-                </div>
-                
-                <!-- Divider -->
-                <div class="w-full h-px bg-gradient-to-r from-transparent via-gray-300 to-transparent mb-5"></div>
-                
-                <!-- Welcome Message -->
-                <div class="text-center">
-                    <p class="text-sm text-gray-500 font-light tracking-wide mb-1">
+                    <!-- Subtle divider -->
+                    <div class="w-12 h-px bg-gradient-to-r from-transparent via-gray-300 to-transparent mx-auto my-3"></div>
+                    
+                    <!-- Welcome Message -->
+                    <p class="text-xs text-gray-400 font-light tracking-wide">
                         Welcome from
                     </p>
-                    <p class="text-xl font-semibold text-gray-800 tracking-tight">
+                    <p class="text-sm font-semibold text-gray-700 tracking-tight mt-0.5">
                         Metrika Real Estate
                     </p>
                 </div>
             </div>
             
             <!-- Scroll Indicator -->
-            <div class="scroll-indicator flex flex-col items-center mt-6 text-white/70">
-                <span class="text-xs font-medium tracking-wide uppercase mb-2">Scroll</span>
-                <i class="fas fa-chevron-down text-sm"></i>
+            <div class="scroll-indicator flex flex-col items-center mt-5 text-white/70">
+                <span class="text-[10px] font-medium tracking-wide uppercase mb-1">Scroll</span>
+                <i class="fas fa-chevron-down text-xs"></i>
             </div>
         </div>
     </section>
@@ -573,14 +556,13 @@
             
             <!-- Action Buttons -->
             <div class="space-y-3">
-                <!-- Save Contact Button (Primary) - Now an anchor tag for better mobile support -->
+                <!-- Call Button (Primary) - Opens Phone Dialer -->
                 <a 
-                    id="saveContactBtn"
-                    href="#"
+                    href="tel:+15551234567"
                     class="btn-press w-full py-4 px-6 bg-gray-900 text-white font-semibold rounded-2xl flex items-center justify-center gap-3 shadow-lg shadow-gray-900/20 no-underline"
                 >
-                    <i class="fas fa-user-plus" id="saveContactIcon"></i>
-                    <span id="saveContactText">Save Contact</span>
+                    <i class="fas fa-phone"></i>
+                    <span>Call Now</span>
                 </a>
                 
                 <!-- WhatsApp Button (Secondary) -->
@@ -763,21 +745,21 @@
             company: "Metrika Real Estate",
             tagline: "Elevating the standard of living.",
             
+            // Phone number for tel: link (include country code)
             phone: "+15551234567",
             phoneDisplay: "+1 (555) 123-4567",
+            
             email: "alex@metrikarealestate.com",
             website: "https://metrikarealestate.com",
             
+            // WhatsApp (number without + or spaces)
             whatsappNumber: "15551234567",
             whatsappMessage: "Hello Alexander, I'd like to discuss real estate opportunities.",
             
             profilePhoto: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop&crop=face",
             
             address: {
-                street: "",
                 city: "Dubai",
-                state: "",
-                zip: "",
                 country: "UAE"
             },
 
@@ -843,216 +825,6 @@
             }
             document.removeEventListener('touchstart', initVideo);
         }, { once: true });
-
-        // ═══════════════════════════════════════════════════════════════
-        // VCARD GENERATION & DOWNLOAD - ROBUST MULTI-METHOD APPROACH
-        // ═══════════════════════════════════════════════════════════════
-        
-        function createVCardContent() {
-            const d = BROKER_DATA;
-            
-            // Build vCard string with proper formatting
-            const lines = [
-                'BEGIN:VCARD',
-                'VERSION:3.0',
-                `N:${d.lastName};${d.firstName};;;`,
-                `FN:${d.fullName}`,
-                `ORG:${d.company}`,
-                `TITLE:${d.title}`,
-                `TEL;TYPE=CELL:${d.phone}`,
-                `EMAIL:${d.email}`,
-                `URL:${d.website}`,
-            ];
-            
-            // Add address if available
-            if (d.address.city) {
-                lines.push(`ADR;TYPE=WORK:;;${d.address.street};${d.address.city};${d.address.state};${d.address.zip};${d.address.country}`);
-            }
-            
-            // Add note
-            if (d.tagline) {
-                lines.push(`NOTE:${d.tagline}`);
-            }
-            
-            lines.push('END:VCARD');
-            
-            return lines.join('\n');
-        }
-
-        function updateButtonState(state, message) {
-            const btn = document.getElementById('saveContactBtn');
-            const icon = document.getElementById('saveContactIcon');
-            const text = document.getElementById('saveContactText');
-            
-            switch(state) {
-                case 'loading':
-                    icon.className = 'fas fa-spinner fa-spin';
-                    text.textContent = 'Preparing...';
-                    btn.style.pointerEvents = 'none';
-                    break;
-                case 'success':
-                    icon.className = 'fas fa-check';
-                    text.textContent = message || 'Contact Saved!';
-                    btn.style.background = '#22c55e';
-                    setTimeout(() => resetButton(), 3000);
-                    break;
-                case 'error':
-                    icon.className = 'fas fa-exclamation-circle';
-                    text.textContent = message || 'Try Again';
-                    btn.style.background = '#ef4444';
-                    setTimeout(() => resetButton(), 3000);
-                    break;
-            }
-        }
-
-        function resetButton() {
-            const btn = document.getElementById('saveContactBtn');
-            const icon = document.getElementById('saveContactIcon');
-            const text = document.getElementById('saveContactText');
-            
-            icon.className = 'fas fa-user-plus';
-            text.textContent = 'Save Contact';
-            btn.style.background = '';
-            btn.style.pointerEvents = '';
-        }
-
-        async function downloadVCard() {
-            const vCardContent = createVCardContent();
-            const fileName = `${BROKER_DATA.fullName.replace(/\s+/g, '_')}.vcf`;
-            
-            updateButtonState('loading');
-            
-            // Small delay for UX
-            await new Promise(resolve => setTimeout(resolve, 300));
-            
-            // Method 1: Try using Web Share API (best for mobile)
-            if (navigator.share && navigator.canShare) {
-                try {
-                    const file = new File([vCardContent], fileName, { type: 'text/vcard' });
-                    
-                    if (navigator.canShare({ files: [file] })) {
-                        await navigator.share({
-                            files: [file],
-                            title: BROKER_DATA.fullName,
-                            text: `Contact card for ${BROKER_DATA.fullName}`
-                        });
-                        updateButtonState('success', 'Contact Shared!');
-                        return;
-                    }
-                } catch (err) {
-                    if (err.name !== 'AbortError') {
-                        console.log('Share API failed, trying fallback...', err);
-                    } else {
-                        // User cancelled share
-                        resetButton();
-                        return;
-                    }
-                }
-            }
-            
-            // Method 2: Direct blob download
-            try {
-                const blob = new Blob([vCardContent], { type: 'text/vcard;charset=utf-8' });
-                
-                // Check if we're on iOS
-                const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
-                
-                if (isIOS) {
-                    // Method 2a: iOS - Open blob URL in new window
-                    const blobUrl = URL.createObjectURL(blob);
-                    
-                    // Create temporary link
-                    const link = document.createElement('a');
-                    link.href = blobUrl;
-                    link.download = fileName;
-                    link.style.display = 'none';
-                    document.body.appendChild(link);
-                    
-                    // Try click
-                    link.click();
-                    
-                    // Cleanup
-                    setTimeout(() => {
-                        document.body.removeChild(link);
-                        URL.revokeObjectURL(blobUrl);
-                    }, 100);
-                    
-                    updateButtonState('success', 'Opening Contact...');
-                    
-                } else {
-                    // Method 2b: Android/Desktop - Standard download
-                    const url = URL.createObjectURL(blob);
-                    const link = document.createElement('a');
-                    link.href = url;
-                    link.download = fileName;
-                    document.body.appendChild(link);
-                    link.click();
-                    document.body.removeChild(link);
-                    URL.revokeObjectURL(url);
-                    
-                    updateButtonState('success');
-                }
-                
-            } catch (err) {
-                console.error('Blob download failed:', err);
-                
-                // Method 3: Data URI fallback
-                try {
-                    const dataUri = 'data:text/vcard;charset=utf-8,' + encodeURIComponent(vCardContent);
-                    const link = document.createElement('a');
-                    link.href = dataUri;
-                    link.download = fileName;
-                    link.target = '_blank';
-                    document.body.appendChild(link);
-                    link.click();
-                    document.body.removeChild(link);
-                    
-                    updateButtonState('success', 'Opening Contact...');
-                    
-                } catch (err2) {
-                    console.error('Data URI failed:', err2);
-                    
-                    // Method 4: Last resort - window.open
-                    try {
-                        const dataUri = 'data:text/vcard;charset=utf-8,' + encodeURIComponent(vCardContent);
-                        window.open(dataUri, '_blank');
-                        updateButtonState('success', 'Opening Contact...');
-                    } catch (err3) {
-                        updateButtonState('error', 'Download Failed');
-                    }
-                }
-            }
-        }
-
-        // Attach event listener
-        document.getElementById('saveContactBtn').addEventListener('click', function(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            downloadVCard();
-        });
-
-        // Also handle touch events for iOS
-        document.getElementById('saveContactBtn').addEventListener('touchend', function(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            downloadVCard();
-        }, { passive: false });
-
-        // ═══════════════════════════════════════════════════════════════
-        // SMOOTH SCROLL FOR ANCHOR LINKS
-        // ═══════════════════════════════════════════════════════════════
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            });
-        });
     </script>
 
 </body>
